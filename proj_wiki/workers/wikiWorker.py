@@ -2,15 +2,13 @@
 import requests
 import bs4
 
-from typing import Generator
-
 class WikiWorker():
     def __init__(self):
         self._url = "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies"
 
 
     @staticmethod
-    def _clean_data(resp: requests.Response) -> Generator:
+    def _clean_data(resp: requests.Response):
         soup = bs4.BeautifulSoup(resp.text, "lxml")
         table: bs4.Tag = soup.find(id="constituents")
         table_rows: bs4.ResultSet = table.find_all("tr")
