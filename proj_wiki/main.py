@@ -15,7 +15,7 @@ def thread_implementation():
 
 
     current_threads = []
-    for i in range(NUMBER_OF_WORKERS):
+    for _ in range(NUMBER_OF_WORKERS):
         t = YahooScheduler(queue=symbol_queue)
         current_threads.append(t)
 
@@ -43,6 +43,6 @@ def sequential_implementation():
     print(f"Total time: {round(time.time() - st, 1)} seconds")
     # Total time: 738.4 seconds
 
-# thread_implementation()
-sequential_implementation()
+thread_implementation()
+# sequential_implementation()
     

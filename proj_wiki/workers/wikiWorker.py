@@ -27,11 +27,7 @@ class WikiWorker():
         yield from self._clean_data(resp)
 
 if __name__ == "__main__":
-    print("hellooooo")
     wk = WikiWorker()
     x = wk.extract_companies()
     
-    print(next(x))
-    print(next(x))
-    print(next(x))
     print(next(x))
