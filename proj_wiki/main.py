@@ -1,33 +1,40 @@
-import time
+# initializing django orm
+import django
 import os
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
+django.setup()
+
+import time
 
 from multiprocessing import Queue
 
-from workers import WikiWorker, YahooScheduler, YahooWorker
+from workers import WikiWorker, YahooScheduler, YahooWorker, StorageScheduler
 
-# initializing django orm
-import os
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
-import django
-django.setup()
 
 
 def thread_implementation():
 
     NUMBER_OF_WORKERS = 50
-    
+    NUMBER_OF_SQL_WORKERS = 1
     start = time.time()
     symbol_queue = Queue()
+    output_queue = Queue()
     wiki = WikiWorker()
 
 
     current_threads = []
     for _ in range(NUMBER_OF_WORKERS):
-        t = YahooScheduler(queue=symbol_queue)
+        t = YahooScheduler(queue=symbol_queue, output_queues=[output_queue])
         current_threads.append(t)
+    
+    for i in range(NUMBER_OF_SQL_WORKERS):
+        t = StorageScheduler(queue=output_queue, name=f"SQL_THREAD_{i+1}")
+        current_threads.append(t)
+
 
     for symbol in wiki.extract_companies():
         symbol_queue.put(symbol)
+        
 
     for _ in range(NUMBER_OF_WORKERS):
         symbol_queue.put("DONE")
@@ -50,5 +57,5 @@ def sequential_implementation():
     print(f"Total time: {round(time.time() - st, 1)} seconds")
     # Total time: 738.4 seconds
 
-# thread_implementation()
+thread_implementation()
 # sequential_implementation()

@@ -2,13 +2,15 @@ import threading
 import requests
 
 from multiprocessing import Queue
+from typing import List
 from lxml import html
 
 
 class YahooScheduler(threading.Thread):
 
-    def __init__(self, queue: Queue, **kwargs):
+    def __init__(self, queue: Queue, output_queues: List[Queue], **kwargs):
         self._queue = queue
+        self._output_queues = output_queues
         super(YahooScheduler, self).__init__(**kwargs)
         self.start()
 
@@ -19,7 +21,10 @@ class YahooScheduler(threading.Thread):
                 break
 
             price: float = YahooWorker(symbol=symbol).get_price()
-            print(price)
+            output_vaues = [symbol, price]
+            print(f"GENERATED VALUES: {output_vaues}")
+            for queue in self._output_queues:
+                queue.put(output_vaues)
 
 class YahooWorker:
     
