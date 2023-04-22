@@ -1,8 +1,15 @@
 import time
+import os
+
 from multiprocessing import Queue
 
 from workers import WikiWorker, YahooScheduler, YahooWorker
 
+# initializing django orm
+import os
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
+import django
+django.setup()
 
 
 def thread_implementation():
@@ -43,6 +50,5 @@ def sequential_implementation():
     print(f"Total time: {round(time.time() - st, 1)} seconds")
     # Total time: 738.4 seconds
 
-thread_implementation()
+# thread_implementation()
 # sequential_implementation()
-    
