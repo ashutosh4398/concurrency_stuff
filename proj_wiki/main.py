@@ -15,7 +15,7 @@ from workers import WikiWorker, YahooScheduler, YahooWorker, StorageScheduler
 def thread_implementation():
 
     NUMBER_OF_WORKERS = 50
-    NUMBER_OF_SQL_WORKERS = 50
+    NUMBER_OF_SQL_WORKERS = 5
     start = time.time()
     symbol_queue = Queue()
     output_queue = Queue()
