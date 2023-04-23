@@ -23,7 +23,7 @@ class Barber(threading.Thread):
         self.current_customer = None
     
     def sleep(self):
-        print(f"{process_time()} Sleeping...")
+        print(f"{process_time()}:: Sleeping...")
         time.sleep(1)
 
     def run(self):
@@ -37,6 +37,6 @@ class Barber(threading.Thread):
                     self._process_customer(customer)
                 else:
                     self.sleep()
-            time.sleep(1)
+            time.sleep(0.2)
                     
                 

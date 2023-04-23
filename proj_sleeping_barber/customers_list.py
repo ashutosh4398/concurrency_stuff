@@ -1,8 +1,6 @@
 customers = [
     {
         "name": "Ashutosh",
-        "interval": 3,
-        "processing_time": 1
     },
     {
         "name": "Nayan",
