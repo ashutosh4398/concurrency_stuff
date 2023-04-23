@@ -24,14 +24,3 @@ with Pool(cpus) as mp_pool:
 print(results)
 
 print(f"Everything took : {time.perf_counter() - start} seconds")
-
-# 2^3 => 8
-# 2*2*2
-
-# 2^4 => 16
-
-# addition = 1
-# for i in range(4):
-#   mul += 2+2
-#
-
